@@ -209,7 +209,10 @@ class DrumMachine {
 
         // Vibrate on mobile devices (50ms - more noticeable)
         if ('vibrate' in navigator) {
+            console.log('Vibrating...');
             navigator.vibrate(50);
+        } else {
+            console.log('Vibration API not supported');
         }
     }
 }
