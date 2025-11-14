@@ -129,6 +129,7 @@ class DrumMachine {
         pads.forEach(pad => {
             pad.addEventListener('touchstart', (e) => {
                 e.preventDefault();
+                console.log('Touch event on pad:', pad.dataset.index);
                 this.playSound(parseInt(pad.dataset.index));
                 this.activatePad(pad);
             });
@@ -140,6 +141,7 @@ class DrumMachine {
 
             // Mouse events (desktop)
             pad.addEventListener('mousedown', (e) => {
+                console.log('Mouse event on pad:', pad.dataset.index);
                 this.playSound(parseInt(pad.dataset.index));
                 this.activatePad(pad);
             });
@@ -158,6 +160,7 @@ class DrumMachine {
             const key = e.key.toLowerCase();
             if (this.keyMap.hasOwnProperty(key) && !e.repeat) {
                 const index = this.keyMap[key];
+                console.log('Key pressed:', key, 'index:', index);
                 this.playSound(index);
                 const pad = document.querySelector(`[data-index="${index}"]`);
                 if (pad) this.activatePad(pad);
@@ -190,14 +193,21 @@ class DrumMachine {
     }
 
     async playSound(index) {
+        console.log('playSound called with index:', index);
+
         if (!this.isInitialized) {
+            console.log('Initializing audio...');
             await this.initAudio();
         }
 
         // Resume AudioContext if it's suspended
         if (this.audioContext.state === 'suspended') {
+            console.log('Resuming suspended AudioContext...');
             await this.audioContext.resume();
         }
+
+        console.log('AudioContext state:', this.audioContext.state);
+        console.log('Samples loaded:', this.samplesLoaded);
 
         if (!this.samplesLoaded) {
             console.log('Samples still loading...');
@@ -209,6 +219,8 @@ class DrumMachine {
             console.error(`No buffer loaded for index ${index}`);
             return;
         }
+
+        console.log('Playing sound for index:', index);
 
         // Create a buffer source (can't reuse, must create new one each time)
         const source = this.audioContext.createBufferSource();
