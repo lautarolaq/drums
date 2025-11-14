@@ -216,9 +216,9 @@ class DrumMachine {
         // Start playback immediately (zero latency)
         source.start(0);
 
-        // Vibrate on mobile devices (30ms - subtle feedback)
+        // Vibrate on mobile devices (10ms - minimal feedback)
         if ('vibrate' in navigator) {
-            navigator.vibrate(30);
+            navigator.vibrate(10);
         }
     }
 }
