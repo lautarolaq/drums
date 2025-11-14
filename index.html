@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Drum Pad 6x6</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 10px;
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            aspect-ratio: 1;
+        }
+
+        .drum-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 12px;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+        }
+
+        .drum-pad {
+            background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
+            border: 2px solid #4a4a4a;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.05s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            user-select: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .drum-pad:hover {
+            background: linear-gradient(145deg, #4a4a4a, #3a3a3a);
+            transform: translateY(-2px);
+        }
+
+        .drum-pad.active {
+            background: linear-gradient(145deg, #ff6b6b, #ee5a52);
+            border-color: #ff8787;
+            transform: scale(0.95);
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.6), inset 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .drum-pad .key {
+            font-size: clamp(14px, 2vw, 18px);
+            font-weight: bold;
+            color: #888;
+            margin-bottom: 4px;
+        }
+
+        .drum-pad .label {
+            font-size: clamp(10px, 1.5vw, 14px);
+            color: #aaa;
+            text-align: center;
+        }
+
+        .drum-pad.active .key,
+        .drum-pad.active .label {
+            color: #fff;
+        }
+
+        .title {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-size: clamp(20px, 4vw, 32px);
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+        }
+
+        @media (max-width: 768px) {
+            .drum-grid {
+                gap: 6px;
+                padding: 5px;
+            }
+
+            .drum-pad {
+                border-radius: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .drum-grid {
+                gap: 4px;
+                padding: 5px;
+            }
+
+            .drum-pad .label {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 class="title">ACOUSTIC DRUMS</h1>
+    <div class="container">
+        <div class="drum-grid" id="drumGrid"></div>
+    </div>
+    <script src="drum-pad.js"></script>
+</body>
+</html>
