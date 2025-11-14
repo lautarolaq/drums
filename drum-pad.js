@@ -206,6 +206,11 @@ class DrumMachine {
 
         // Start playback immediately (zero latency)
         source.start(0);
+
+        // Vibrate on mobile devices (30ms)
+        if (navigator.vibrate) {
+            navigator.vibrate(30);
+        }
     }
 }
 
