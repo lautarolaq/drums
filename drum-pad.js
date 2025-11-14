@@ -49,6 +49,12 @@ class DrumMachine {
         if (this.isInitialized) return;
 
         this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+        // Resume AudioContext if suspended (required by browsers)
+        if (this.audioContext.state === 'suspended') {
+            await this.audioContext.resume();
+        }
+
         this.masterGain = this.audioContext.createGain();
         this.masterGain.gain.value = 0.8;
         this.masterGain.connect(this.audioContext.destination);
@@ -186,6 +192,11 @@ class DrumMachine {
     async playSound(index) {
         if (!this.isInitialized) {
             await this.initAudio();
+        }
+
+        // Resume AudioContext if it's suspended
+        if (this.audioContext.state === 'suspended') {
+            await this.audioContext.resume();
         }
 
         if (!this.samplesLoaded) {
